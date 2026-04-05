@@ -2,6 +2,7 @@ const { nodeResolve } = require('@rollup/plugin-node-resolve');
 const commonjs = require('@rollup/plugin-commonjs');
 const babel = require('@rollup/plugin-babel');
 const copy = require('rollup-plugin-copy');
+const tenser = require('@rollup/plugin-terser');
 
 module.exports = function (grunt) {
     const screepsAuth = require('./.screeps.json')
@@ -41,6 +42,7 @@ module.exports = function (grunt) {
                             rename: `rusty_the_screeper_bg.wasm`,
                         }]
                     }),
+                    tenser(),
                 ],
             },
             main: {
