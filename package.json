@@ -18,5 +18,8 @@
     "grunt-rollup": "^12.0.0",
     "grunt-screeps": "^1.5.0",
     "rollup-plugin-copy": "^3.5.0"
+  },
+  "dependencies": {
+    "fastestsmallesttextencoderdecoder-encodeinto": "^1.0.22"
   }
 }

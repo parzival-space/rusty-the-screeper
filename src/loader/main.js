@@ -1,4 +1,5 @@
 "use strict";
+import 'fastestsmallesttextencoderdecoder-encodeinto/EncoderDecoderTogether.min.js';
 import * as wasm from '../../pkg';
 
 // filename of the wasm binary
