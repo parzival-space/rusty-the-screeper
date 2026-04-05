@@ -1,0 +1,15 @@
+# build output
+/target
+**/*.rs.bk
+Cargo.lock
+bin/
+pkg/
+dist/
+wasm-pack.log
+
+# node
+node_modules/
+
+# secrets
+.screeps.json
+
