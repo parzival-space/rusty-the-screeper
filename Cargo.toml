@@ -16,7 +16,7 @@ web-sys = "0.3.94"
 
 # logging
 log = "0.4.29"
-fern = "0.7.1"
+simplelog = "0.12.2"
 
 [dev-dependencies]
 wasm-bindgen-test = "0.3.13"

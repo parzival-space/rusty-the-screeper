@@ -7,7 +7,15 @@ const WASM_NAME = "rusty_the_screeper_bg";
 
 let running = false, wasm_bytes, wasm_module, wasm_instance;
 
+function console_error() {
+    const error_args = _
+        .map(arguments, (arg) => (arg instanceof Error) ? arg.stack : arg);
+    console.log("Error:", ...error_args);
+    Game.notify(error_args.join(' '));
+}
+
 function loop_from_memory() {
+    console.error = console_error;
     if (running) {
         // I don't know, just stole it.
         // workaround for https://github.com/rustwasm/wasm-bindgen/issues/3130
@@ -24,9 +32,11 @@ function loop_from_memory() {
 }
 
 module.exports.loop = () => {
+    console.error = console_error;
+
     if (!wasm_bytes) wasm_bytes = require(WASM_NAME);
     if (!wasm_module) wasm_module = new WebAssembly.Module(wasm_bytes);
-    if (!wasm_instance) wasm_instance = wasm.initSync({ module: wasm_module });
+    if (!wasm_instance) wasm_instance = wasm.initSync({module: wasm_module});
 
     // clean unnecessary memory
     wasm_bytes = null;
