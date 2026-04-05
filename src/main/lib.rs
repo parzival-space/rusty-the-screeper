@@ -1,7 +1,7 @@
 mod logging;
 
 use crate::logging::setup_logging;
-use log::{debug, trace};
+use log::{debug};
 use screeps::*;
 use wasm_bindgen::prelude::wasm_bindgen;
 
@@ -19,6 +19,4 @@ pub fn init() {
 }
 
 #[wasm_bindgen(js_name = "tick")]
-pub fn tick() {
-    trace!("Ticking");
-}
+pub fn tick() { }

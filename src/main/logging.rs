@@ -40,30 +40,30 @@ impl Log for ConsoleLogger {
         // target
         write!(
             &mut message_string,
-            "<span>{target:<pad$}: </span>",
+            "{target:<pad$}: ",
             target = record.target(),
-            pad = 10
+            pad = 20
         )
         .unwrap_or(());
 
         // file: line
         let file = record.file().unwrap_or("<unknown>");
         if let Some(line) = record.line() {
-            write!(&mut message_string, "<span>[{}:{}] </span>", file, line).unwrap_or(());
+            write!(&mut message_string, "[{}:{}] ", file, line).unwrap_or(());
         } else {
-            write!(&mut message_string, "<span>[{}] </span>", file).unwrap_or(());
+            write!(&mut message_string, "[{}] ", file).unwrap_or(());
         }
 
         // module path
         write!(
             &mut message_string,
-            "<span>[{}] </span>",
+            "[{}] ",
             record.module_path().unwrap_or("<unknown>")
         )
         .unwrap_or(());
 
         // message
-        write!(&mut message_string, "<span>{}</span>", record.args()).unwrap_or(());
+        write!(&mut message_string, "{}", record.args()).unwrap_or(());
 
         console::log_unsafe(&JsString::from(message_string));
     }
