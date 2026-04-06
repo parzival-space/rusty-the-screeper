@@ -1,9 +1,12 @@
 mod logging;
+mod creeps;
 
+use std::cell::RefCell;
 use crate::logging::setup_logging;
 use log::{debug};
-use screeps::*;
+use screeps::game::creeps;
 use wasm_bindgen::prelude::wasm_bindgen;
+use crate::creeps::manager::CreepManager;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
 // allocator.
@@ -19,4 +22,10 @@ pub fn init() {
 }
 
 #[wasm_bindgen(js_name = "tick")]
-pub fn tick() { }
+pub fn tick() {
+    CreepManager::with(|manager| {
+        for creep in creeps().values() {
+            manager.tick_creep(creep);
+        }
+    });
+}
