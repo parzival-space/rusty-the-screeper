@@ -1,10 +1,9 @@
-use js_sys::{Error, JsString};
+use js_sys::{JsString};
 use log::{Level, LevelFilter, Log, Metadata, Record, error};
 use screeps::console;
 use simplelog::{CombinedLogger, Config, SharedLogger};
 use std::fmt::Write;
 use std::panic;
-use std::panic::PanicHookInfo;
 
 fn get_level_colour(level: Level) -> String {
     match level {
@@ -31,9 +30,9 @@ impl Log for ConsoleLogger {
         // level
         write!(
             &mut message_string,
-            "<span style=\"color:{};\">[{}] </span>",
+            "<span style=\"color:{};\">{:<6} </span>",
             get_level_colour(record.level()),
-            record.level()
+            format!("[{}]", record.level())
         )
         .unwrap_or(());
 
