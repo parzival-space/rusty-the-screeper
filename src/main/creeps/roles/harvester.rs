@@ -2,16 +2,20 @@ use std::fmt::{Debug, Formatter};
 use std::mem;
 use std::sync::Arc;
 use log::{trace, warn};
-use screeps::{find, Creep, Harvestable, ResourceType, RoomObjectProperties, SharedCreepProperties, StructureController, Transferable};
+use screeps::{find, BodyPart, Creep, Harvestable, Part, ResourceType, RoomObjectProperties, SharedCreepProperties, StructureController, Transferable};
 use screeps::action_error_codes::{HarvestErrorCode, TransferErrorCode, UpgradeControllerErrorCode};
-use crate::creeps::roles::{CreepRole};
+use screeps::Part::{Carry, Move, Work};
+use crate::creeps::roles::{CreepRoleHandler};
+
+static HARVESTER_TEMPLATE_MIN: &'static [Part] = &[Carry, Move, Work];
+static HARVESTER_TEMPLATE_SCALE: &'static [Part] = &[Carry, Move];
 
 #[derive(Debug)]
 pub struct Harvester {
     state: HarvesterState,
 }
 
-impl CreepRole for Harvester {
+impl CreepRoleHandler for Harvester {
     fn new() -> Self
     where
         Self: Sized
@@ -28,6 +32,28 @@ impl CreepRole for Harvester {
             HarvesterState::UpgradingController(target) => self.upgrade_controller(creep, &target),
             HarvesterState::Transferring(target, resource) => self.transfer_resource(creep, &target,  &resource)
         }
+    }
+    
+    fn create_parts_template(available_energy: usize) -> Option<Vec<Part>> {
+        let mut parts = HARVESTER_TEMPLATE_MIN.to_vec();
+        let mut current_cost: usize = parts.iter().map(|p| p.cost() as usize).sum();
+
+        if current_cost > available_energy {
+            return None;
+        }
+
+        let mut scale_iter = HARVESTER_TEMPLATE_SCALE.iter().cycle();
+
+        while let Some(part) = scale_iter.next() {
+            let part_cost = part.cost() as usize;
+            if current_cost + part_cost > available_energy {
+                break;
+            }
+            parts.push(*part);
+            current_cost += part_cost;
+        }
+
+        Some(parts)
     }
 }
 

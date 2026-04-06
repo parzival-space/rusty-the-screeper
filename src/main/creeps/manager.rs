@@ -1,9 +1,13 @@
 use std::cell::RefCell;
 use std::collections::HashMap;
-use log::{debug, trace, warn};
-use screeps::{Creep, SharedCreepProperties};
-use crate::creeps::roles::CreepRole;
+use std::fmt::format;
+use log::{debug, error, trace, warn};
+use screeps::{game, Creep, ResourceType, SharedCreepProperties, StructureSpawn};
+use screeps::action_error_codes::SpawnCreepErrorCode;
+use uuid::Uuid;
+use crate::creeps::roles::CreepRoleHandler;
 use crate::creeps::roles::Harvester;
+use crate::extensions::uuid::UuidScreeps;
 
 thread_local! {
     // stores the first created manager instance
@@ -12,7 +16,7 @@ thread_local! {
 
 #[derive(Debug)]
 pub struct CreepManager {
-    creep_role_map: HashMap<String, Box<dyn CreepRole>>
+    creep_role_map: HashMap<String, Box<dyn CreepRoleHandler>>
 }
 
 impl CreepManager {
@@ -43,5 +47,23 @@ impl CreepManager {
         };
 
         handler.tick(&mut creep);
+    }
+
+    pub fn spawn_creep(&mut self, spawn: StructureSpawn) {
+        let creep_name = Uuid::new_screeps_v4().to_string();
+
+        let energy_available = spawn.store().get_used_capacity(Some(ResourceType::Energy)) as usize;
+        let Some(creep_template) = Harvester::create_parts_template(energy_available) else {
+            warn!("Failed to create creep template for new creep {}. Not spawning.", creep_name);
+            return;
+        };
+
+        // assign new creep to role
+        self.creep_role_map.insert(creep_name.clone(), Box::new(Harvester::new()));
+
+        match spawn.spawn_creep(&creep_template, &creep_name) {
+            Ok(_) => {}
+            Err(error) => error!("Unexpected error while spawning creep {}: {}", creep_name, error)
+        }
     }
 }
