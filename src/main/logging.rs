@@ -34,7 +34,7 @@ impl Log for ConsoleLogger {
             get_level_colour(record.level()),
             format!("[{}]", record.level())
         )
-        .unwrap_or(());
+            .unwrap_or(());
 
         // target
         write!(
@@ -43,7 +43,7 @@ impl Log for ConsoleLogger {
             target = record.target(),
             pad = 20
         )
-        .unwrap_or(());
+            .unwrap_or(());
 
         // file: line
         let file = record.file().unwrap_or("<unknown>");
@@ -59,7 +59,7 @@ impl Log for ConsoleLogger {
             "[{}] ",
             record.module_path().unwrap_or("<unknown>")
         )
-        .unwrap_or(());
+            .unwrap_or(());
 
         // message
         write!(&mut message_string, "{}", record.args()).unwrap_or(());

@@ -56,12 +56,12 @@ impl ScreepsXorShiftRng {
     {
         STORE.with(|store| {
             let mut store = store.borrow_mut();
-            
+
             let instance = store.get_or_insert_with(|| {
                 trace!("Creating new ScreepsXorShiftRng instance for ScreepsXorShiftRng::with");
                 Self::new()
             });
-            
+
             f(instance)
         })
     }

@@ -12,7 +12,7 @@ impl UuidScreeps for Uuid {
         let mut uuid_bytes = [0u8; 16];
 
         ScreepsXorShiftRng::with(|instance| instance.fill_bytes(&mut uuid_bytes));
-        
+
         Uuid::from_bytes(uuid_bytes) // err tick ends because no more cpu
     }
 }

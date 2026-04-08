@@ -18,7 +18,7 @@ pub struct Harvester {
 impl CreepRoleHandler for Harvester {
     fn new() -> Self
     where
-        Self: Sized
+        Self: Sized,
     {
         Self {
             state: HarvesterState::Idle,
@@ -30,10 +30,10 @@ impl CreepRoleHandler for Harvester {
             HarvesterState::Idle => self.idle(creep),
             HarvesterState::Harvesting(target, resource) => self.harvest(creep, &target, &resource),
             HarvesterState::UpgradingController(target) => self.upgrade_controller(creep, &target),
-            HarvesterState::Transferring(target, resource) => self.transfer_resource(creep, &target,  &resource)
+            HarvesterState::Transferring(target, resource) => self.transfer_resource(creep, &target, &resource)
         }
     }
-    
+
     fn create_parts_template(available_energy: usize) -> Option<Vec<Part>> {
         let mut parts = HARVESTER_TEMPLATE_MIN.to_vec();
         let mut current_cost: usize = parts.iter().map(|p| p.cost() as usize).sum();
@@ -146,7 +146,7 @@ enum HarvesterState {
     Idle,
     Harvesting(Arc<dyn Harvestable>, ResourceType),
     UpgradingController(StructureController),
-    Transferring(Arc<dyn Transferable>, ResourceType)
+    Transferring(Arc<dyn Transferable>, ResourceType),
 }
 
 impl Debug for HarvesterState {

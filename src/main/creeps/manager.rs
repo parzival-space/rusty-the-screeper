@@ -16,7 +16,7 @@ thread_local! {
 
 #[derive(Debug)]
 pub struct CreepManager {
-    creep_role_map: HashMap<String, Box<dyn CreepRoleHandler>>
+    creep_role_map: HashMap<String, Box<dyn CreepRoleHandler>>,
 }
 
 impl CreepManager {
