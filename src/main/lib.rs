@@ -2,12 +2,12 @@ mod logging;
 mod creeps;
 pub mod extensions;
 
-use std::cell::RefCell;
+use crate::creeps::manager::CreepManager;
 use crate::logging::setup_logging;
 use log::{debug, info};
 use screeps::game::creeps;
+use std::cell::RefCell;
 use wasm_bindgen::prelude::wasm_bindgen;
-use crate::creeps::manager::CreepManager;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
 // allocator.

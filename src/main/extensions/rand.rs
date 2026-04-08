@@ -1,11 +1,11 @@
-use std::option::Option;
-use std::cell::RefCell;
-use std::convert::Infallible;
-use log::{trace};
+use crate::creeps::manager::CreepManager;
+use log::trace;
 use rand::{Rng, SeedableRng, TryRng};
 use rand_xorshift::XorShiftRng;
 use screeps::game;
-use crate::creeps::manager::CreepManager;
+use std::cell::RefCell;
+use std::convert::Infallible;
+use std::option::Option;
 
 thread_local! {
     static STORE: RefCell<Option<ScreepsXorShiftRng>> = RefCell::new(None);

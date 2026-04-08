@@ -1,9 +1,6 @@
-use log::trace;
+use crate::extensions::rand::ScreepsXorShiftRng;
 use rand::Rng;
-use rand_xorshift::XorShiftRng;
-use screeps::game;
 use uuid::Uuid;
-use crate::extensions::rand::{ScreepsXorShiftRng};
 
 pub trait UuidScreeps {
     /// A Screeps friendly UUID v4 generator that uses game time and CPU usage as a seed for a simple PRNG.

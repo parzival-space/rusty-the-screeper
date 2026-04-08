@@ -1,5 +1,5 @@
+use screeps::{Creep, Part};
 use std::fmt::Debug;
-use screeps::{BodyPart, Creep, Part};
 
 mod harvester;
 pub use harvester::Harvester;

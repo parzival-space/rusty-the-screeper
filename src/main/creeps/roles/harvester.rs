@@ -1,11 +1,11 @@
+use crate::creeps::roles::CreepRoleHandler;
+use log::{trace, warn};
+use screeps::action_error_codes::{HarvestErrorCode, TransferErrorCode, UpgradeControllerErrorCode};
+use screeps::Part::{Carry, Move, Work};
+use screeps::{find, BodyPart, Creep, Harvestable, Part, ResourceType, RoomObjectProperties, SharedCreepProperties, StructureController, Transferable};
 use std::fmt::{Debug, Formatter};
 use std::mem;
 use std::sync::Arc;
-use log::{trace, warn};
-use screeps::{find, BodyPart, Creep, Harvestable, Part, ResourceType, RoomObjectProperties, SharedCreepProperties, StructureController, Transferable};
-use screeps::action_error_codes::{HarvestErrorCode, TransferErrorCode, UpgradeControllerErrorCode};
-use screeps::Part::{Carry, Move, Work};
-use crate::creeps::roles::{CreepRoleHandler};
 
 static HARVESTER_TEMPLATE_MIN: &'static [Part] = &[Carry, Move, Work];
 static HARVESTER_TEMPLATE_SCALE: &'static [Part] = &[Carry, Move];

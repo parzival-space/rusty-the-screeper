@@ -1,13 +1,13 @@
-use std::cell::RefCell;
-use std::collections::HashMap;
-use std::fmt::format;
-use log::{debug, error, trace, warn};
-use screeps::{game, Creep, ResourceType, SharedCreepProperties, StructureSpawn};
-use screeps::action_error_codes::SpawnCreepErrorCode;
-use uuid::Uuid;
 use crate::creeps::roles::CreepRoleHandler;
 use crate::creeps::roles::Harvester;
 use crate::extensions::uuid::UuidScreeps;
+use log::{debug, error, trace, warn};
+use screeps::action_error_codes::SpawnCreepErrorCode;
+use screeps::{game, Creep, ResourceType, SharedCreepProperties, StructureSpawn};
+use std::cell::RefCell;
+use std::collections::HashMap;
+use std::fmt::format;
+use uuid::Uuid;
 
 thread_local! {
     // stores the first created manager instance

@@ -1,5 +1,5 @@
-use js_sys::{JsString};
-use log::{Level, LevelFilter, Log, Metadata, Record, error};
+use js_sys::JsString;
+use log::{error, Level, LevelFilter, Log, Metadata, Record};
 use screeps::console;
 use simplelog::{CombinedLogger, Config, SharedLogger};
 use std::fmt::Write;
