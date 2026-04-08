@@ -1,21 +1,19 @@
 "use strict";
 import 'fastestsmallesttextencoderdecoder-encodeinto/EncoderDecoderTogether.min.js';
 import * as wasm from '../../pkg';
+import {name} from '../../package.json'
 
-// filename of the wasm binary
-const WASM_NAME = "rusty_the_screeper_bg";
+const WASM_NAME = `${name.replaceAll("-", "_")}_bg`;
+let wasm_bytes, wasm_module, wasm_instance, running = false;
 
-let running = false, wasm_bytes, wasm_module, wasm_instance;
-
-function console_error() {
-    const error_args = _
-        .map(arguments, (arg) => (arg instanceof Error) ? arg.stack : arg);
-    console.log("Error:", ...error_args);
-    Game.notify(error_args.join(' '));
+function consoleError(...args) {
+    const errorArgs = args.map(arg => (arg instanceof Error) ? arg.stack : arg);
+    console.log("Error:", ...errorArgs);
+    Game.notify(errorArgs.join(' '));
 }
 
 function loop_from_memory() {
-    console.error = console_error;
+    console.error = consoleError;
     if (running) {
         // I don't know, just stole it.
         // workaround for https://github.com/rustwasm/wasm-bindgen/issues/3130
@@ -32,7 +30,7 @@ function loop_from_memory() {
 }
 
 module.exports.loop = () => {
-    console.error = console_error;
+    console.error = consoleError;
 
     if (!wasm_bytes) wasm_bytes = require(WASM_NAME);
     if (!wasm_module) wasm_module = new WebAssembly.Module(wasm_bytes);

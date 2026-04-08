@@ -12,4 +12,5 @@ node_modules/
 
 # secrets
 .screeps.json
+.screeps.yaml
 
