@@ -28,7 +28,7 @@ export default {
         }),
         copy({
             targets: [{
-                src: `pkg/${packageJson.name.replaceAll("-", "_")}_bg.wasm`,
+                src: `dist/wasm/${packageJson.name.replaceAll("-", "_")}_bg.wasm`,
                 dest: `dist`
             }]
         }),

@@ -1,6 +1,6 @@
 "use strict";
 import 'fastestsmallesttextencoderdecoder-encodeinto/EncoderDecoderTogether.min.js';
-import * as wasm from '../../pkg';
+import * as wasm from '../../dist/wasm';
 import {name} from '../../package.json'
 
 const WASM_NAME = `${name.replaceAll("-", "_")}_bg`;

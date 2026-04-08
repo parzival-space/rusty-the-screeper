@@ -1,11 +1,12 @@
-use crate::creeps::manager::CreepManager;
+use js_sys::Date;
 use log::trace;
-use rand::{Rng, SeedableRng, TryRng};
+use rand::{SeedableRng, TryRng};
 use rand_xorshift::XorShiftRng;
 use screeps::game;
 use std::cell::RefCell;
 use std::convert::Infallible;
 use std::option::Option;
+use wasm_bindgen::prelude::wasm_bindgen;
 
 thread_local! {
     static STORE: RefCell<Option<ScreepsXorShiftRng>> = RefCell::new(None);
@@ -65,4 +66,10 @@ impl ScreepsXorShiftRng {
             f(instance)
         })
     }
+}
+
+#[wasm_bindgen(js_name = "test")]
+pub fn test_js() -> usize {
+    // get current time
+    Date::now() as usize
 }
