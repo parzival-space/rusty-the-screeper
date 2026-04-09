@@ -45,4 +45,6 @@ module.exports.loop = () => {
     wasm_instance.init();
     global.wasm_instance = wasm_instance;
     console.log(`Module load completed, CPU used: ${Game.cpu.getUsed()}`);
+
+    loop_from_memory();
 }
