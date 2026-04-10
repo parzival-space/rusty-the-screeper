@@ -1,9 +1,11 @@
 mod logging;
 mod creeps;
 pub mod extensions;
+pub mod schedule;
 
 use crate::creeps::manager::CreepManager;
 use crate::logging::setup_logging;
+use crate::schedule::task_dispatcher::TaskDispatcher;
 use log::{debug, info};
 use screeps::game::creeps;
 use std::cell::RefCell;
@@ -24,13 +26,11 @@ pub fn init() {
 
 #[wasm_bindgen(js_name = "tick")]
 pub fn tick() {
-    CreepManager::with(|manager| {
-        if creeps().values().count() < 4 {
-            manager.spawn_creep(screeps::game::spawns().values().next().unwrap());
-        }
+    TaskDispatcher::with(|dispatcher| {
+        dispatcher.evaluate_and_assign(&creeps().values().collect::<Vec<_>>());
 
         for creep in creeps().values() {
-            manager.tick_creep(creep);
+            dispatcher.tick_creep(&creep)
         }
     });
 }
