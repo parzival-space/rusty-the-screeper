@@ -70,6 +70,8 @@ impl TaskDispatcher {
                         Box::new(HarvestEnergyTask::new()),
                         creeps,
                     ),
+
+                    // not much we can do about this
                     TaskRequirement::HasFreeCapacity(_, _) => {}
                     TaskRequirement::HasParts(_) => {}
                 }
