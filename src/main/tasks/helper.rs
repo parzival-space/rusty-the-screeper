@@ -26,15 +26,19 @@ pub fn get_creep_move_speed(creep: &Creep) -> usize {
 
 /// Computes the Chebyshev distance between two `RoomPosition`s.
 pub fn chebyshev_pos(a: Position, b: Position) -> f64 {
+    // rooms have coordinates, and a size of 50x50 with a bottom right origin.
+    // this means room X coordinates increase to the top and left sides.
+    // so x=5 and room_x=2 is in reality -98
+
 
     chebyshev(
         &[
-            a.x().u8() as f64 * a.room_name().x_coord() as f64,
-            a.y().u8() as f64 * a.room_name().y_coord() as f64
+            a.x().u8() as f64 + -(a.room_name().x_coord() * 50) as f64,
+            a.y().u8() as f64 + -(a.room_name().y_coord() * 50) as f64,
         ],
         &[
-            (b.x().u8() as f64) * b.room_name().x_coord() as f64,
-            (b.y().u8() as f64) * b.room_name().y_coord() as f64
+            (b.x().u8() as f64) + -(b.room_name().x_coord() * 50) as f64,
+            (b.y().u8() as f64) + -(b.room_name().y_coord() * 50) as f64,
         ],
     )
 }
