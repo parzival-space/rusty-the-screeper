@@ -29,7 +29,7 @@ function loop_from_memory() {
     }
 }
 
-module.exports.loop = () => {
+function init_module() {
     console.error = consoleError;
 
     if (!wasm_bytes) wasm_bytes = require(WASM_NAME);
@@ -45,6 +45,18 @@ module.exports.loop = () => {
     wasm_instance.init();
     global.wasm_instance = wasm_instance;
     console.log(`Module load completed, CPU used: ${Game.cpu.getUsed()}`);
+}
 
+global.restart = () => {
+    wasm_bytes = null;
+    wasm_module = null;
+    wasm_instance = null;
+    running = false;
+
+    init_module();
+}
+
+module.exports.loop = () => {
+    init_module();
     loop_from_memory();
 }

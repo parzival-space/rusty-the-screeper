@@ -3,11 +3,12 @@ use crate::tasks::helper::{chebyshev_pos, get_creep_move_speed};
 use crate::tasks::requirements::has_body_part_requirement::HasBodyPartRequirement;
 use crate::tasks::requirements::TaskRequirement;
 use log::trace;
+use screeps::action_error_codes::CreepMoveToErrorCode;
 use screeps::Part::Move;
 use screeps::{Creep, HasPosition, Position, SharedCreepProperties};
 use std::any::Any;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct MoveToPositonAction {
     target: Position,
     acceptable_range: usize
@@ -24,9 +25,10 @@ impl TaskAction for MoveToPositonAction {
                     TaskActionResult::InProgress
                 }
             }
-            Err(error) => TaskActionResult::Error(
-                TaskActionError::UnknownError(Box::new(error))
-            )
+            Err(error) => match error {
+                CreepMoveToErrorCode::Tired => TaskActionResult::InProgress,
+                error => TaskActionResult::Error(TaskActionError::UnknownError(Box::new(error)))
+            }
         }
     }
 

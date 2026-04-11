@@ -8,13 +8,13 @@ use screeps::ResourceType::Energy;
 use screeps::{Creep, HasPosition, Mineral, Source};
 use std::any::Any;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 enum HarvestTarget {
     Source(Source),
     Mineral(Mineral),
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct HarvestResourceAction {
     target: HarvestTarget,
     capacity_goal: u32
